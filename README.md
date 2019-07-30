@@ -1,14 +1,17 @@
 
 ## building syslogng client & server using Ansible roles & playbook ##
-
+<br/>
+<br/>
+<br/>
 ### use cases:-
 1) build a syslogng-client & syslog-ng server to test log forwarding in your own/an AWS account
 2) in the intended use case we will just need the syslogng-client/log forwarder installing (the syslogng-server /relay is already setup and we will be provided server details via email)
 <br/>
 
-### terms:
+#### terms
 syslogng client = local log forwarder <br>
 syslogng server = log relay
+<br/>
 
 #### Playbooks
 are here:-
@@ -16,13 +19,14 @@ are here:-
        ls -l /etc/ansible/playbook
        syslogng-clients.yml 
        syslogng-server.yml
+<br/>
 
 #### Roles
 are here:-
   
      ls -l /etc/ansible/roles
 
-### role names:-
+### role names
 ansible-hardening               source github repo: https://github.com/openstack/ansible-hardening  
 
 ansible-role-syslogng-client    source githubrepo: https://github.com/OULibraries/ansible-role-syslogng-client  
@@ -62,13 +66,11 @@ add following line at bottom:
 5) on the ansible controller, test the passwordless ssh has been correctly setup:-
 
        ssh ansible@[internal client ip]  ls -l
-<br/>
-<br/>
-<br/>
-
 
 NOTE: if you are setting up an AWS testlab with syslogng client/forwarder & server/relay; setup the syslogng server/relay first
-
+<br/>
+<br/>
+<br/>
 ### installing a syslogng server (log relay)
 1) update the /etc/ansible/hosts file with the local ip of the syslogng server
 identify localhost internal ip:-
@@ -112,8 +114,8 @@ then check the cert store and see it has created a server cert but not a client 
 
        systemctl status syslog-ng.service
        ls -l /var/log/syslog-ng/[syslog-ng fqdn hostname]/YYYY/MM/DD/[syslog-ng fqdn hostname]-YYYY-MM-DD.log
-
-
+<br/>
+<br/>
 <br/>
 
 ### installing a syslogng client (local log forwarder)
@@ -183,7 +185,9 @@ then check the cert store and see it now has both a client and server .pem file
        systemctl status syslog-ng.service
        ls -l /var/log/syslog-ng/[syslogng client fqdn hostname]/YYYY/MM/DD/[syslog-ng client fqdn hostname]-YYYY-MM-DD.log
 
-
+<br/>
+<br/>
+<br/>
 
 
 
