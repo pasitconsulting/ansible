@@ -1,0 +1,48 @@
+---
+syslog_ng_mode: client
+
+syslog_ng_group: root
+syslog_ng_user: root
+
+syslog_ng_config_options:
+  chain_hostnames: 'off'
+  flush_lines: 0
+  use_dns: 'no'
+  use_fqdn: 'no'
+  owner: '"{{syslog_ng_user}}"'
+  group: '"{{syslog_ng_group}}"'
+  perm: 0640
+  stats_freq: 0
+  bad_hostname: '"^gconfd$"'
+  create_dirs: 'yes'
+
+syslog_ng_check_syntax_before_reload: true
+
+syslog_ng_config_version_auto_detect: true
+syslog_ng_config_default_port: 514
+
+# this variable will be overwritten when syslog_ng_config_version_auto_detect is true
+syslog_ng_config_version: "3.3"
+
+# these are overwritten by syslog-ng version specific variables
+syslog_ng_config_includes: []
+syslog_ng_config_post_includes: []
+
+syslog_ng_config_dir: "/etc/syslog-ng"
+syslog_ng_config_file: "{{ syslog_ng_config_dir }}/syslog-ng.conf"
+
+
+# local mode options
+
+syslog_ng_local_dest_dir: /var/log
+
+# client mode options
+
+syslog_ng_client_destinations: []
+
+# server mode options
+
+syslog_ng_server_sources: []
+
+syslog_ng_server_dest_dir: /var/log
+syslog_ng_server_file_macro: $YEAR.$MONTH.$DAY/$HOST.log

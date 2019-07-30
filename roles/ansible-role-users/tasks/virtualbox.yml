@@ -1,0 +1,15 @@
+---
+- name: vagrant user exists
+  user: name=vagrant state=present
+- name: Add vagrant user to wheel group
+  command: usermod -a -G wheel vagrant
+- name: Ensure vagrant user has the /vagrant directory
+  file: path=/vagrant state=directory mode=0775 owner=vagrant group=wheel
+- name: Allow vagrant user ssh access in VirtualBox
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "{{ item }}"
+    state: absent
+  with_items:
+    - ^DenyUsers
+    - ^PasswordAuthentication no$

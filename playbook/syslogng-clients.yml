@@ -1,0 +1,13 @@
+---
+- name: playbook to build a syslog-ng client
+  hosts: syslogng_clients
+  user: ansible
+  become: yes
+  roles:
+    - role: install-syslogng
+    - role: configure-syslogng
+    #- role: hardening-syslogng
+    #STIG centos7 hardening
+    - role: ansible-hardening
+    #OU Libraries
+    - role: ansible-role-syslogng-client

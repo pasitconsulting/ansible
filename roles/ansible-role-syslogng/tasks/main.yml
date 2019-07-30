@@ -1,0 +1,17 @@
+---
+# tasks file for ansible-role-syslogng
+
+- include: hosts.yml
+  sudo: yes
+
+- include: syslogng.yml
+  sudo: yes
+
+- include: ssl-selfsign.yml
+  sudo: yes
+  tags: 
+    - selfsign
+
+- include: ssl-client.yml
+  tags: 
+    - client

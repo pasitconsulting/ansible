@@ -1,0 +1,23 @@
+{
+  "variables": {
+    "aws_access_key": "AKIAT6BJOHYMONPNHWB6",
+    "aws_secret_key": "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"
+  },
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "/etc/ansible/playbook/syslogng-clients.yml"
+    }
+  ],
+
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "eu-west-2",
+      "source_ami": "ami-0eab3a90fc693af19",
+      "instance_type": "t2.micro",
+      "ssh_username": "centos",
+      "ami_name": "syslogng_packer_AWS {{timestamp}}"
+    }
+  ]
+}

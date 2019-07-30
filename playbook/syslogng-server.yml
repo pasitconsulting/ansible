@@ -1,0 +1,10 @@
+---
+- name: playbook to build a syslog-ng server
+  hosts: syslogng_servers
+  user: ansible
+  become: yes
+  roles:
+    - role: install-syslogng
+    - role: configure-syslogng
+    - role: hardening-syslogng
+    - role: ansible-role-syslogng

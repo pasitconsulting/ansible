@@ -1,0 +1,22 @@
+- name: ensure a list of packages installed
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - firewalld
+
+- name: Make sure firewalld service is running
+  systemd:
+    state: started
+    name: firewalld
+
+- firewalld:
+    port: 514/tcp
+    permanent: yes
+    state: enabled
+
+- firewalld:
+    port: 6514/tcp
+    permanent: yes
+    state: enabled
+

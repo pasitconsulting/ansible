@@ -1,0 +1,9 @@
+---
+- name: copy syslog-ng template to remote client
+  template:
+    src: syslog-ng.conf
+    dest: /etc/syslog-ng/syslog-ng.conf
+    owner: root
+    group: root
+    mode: '0644'
+    force: yes

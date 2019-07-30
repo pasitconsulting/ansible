@@ -1,0 +1,36 @@
+#syslogng-server###server-variables
+syslogng_server_ip: 172.31.0.12
+syslogng_dn_prefix: syslogng-server
+syslogng_dn_suffix: example.com
+syslogng_server_protocol: tls
+syslogng_server_port: 514
+
+#syslogng-server###client-variables
+syslogng_client_ip: 172.31.0.9
+syslogng_client_prefix: syslogng-client
+syslogng_client_suffix: example.com
+syslogng_client_cert: |
+  -----BEGIN CERTIFICATE-----
+  MIIEEzCCAvugAwIBAgIJAK3mKFei3EpeMA0GCSqGSIb3DQEBCwUAMIGfMQswCQYD
+  VQQGEwJVUzERMA8GA1UECAwIT2tsYWhvbWExDzANBgNVBAcMBk5vcm1hbjEfMB0G
+  A1UECgwWVW5pdmVyc2l0eSBvZiBPa2xhaG9tYTElMCMGA1UECwwcTGlicmFyeSBU
+  ZWNobm9sb2d5IFBsYXRmb3JtczEkMCIGA1UEAwwbc3lzbG9nbmctY2xpZW50LmV4
+  YW1wbGUuY29tMB4XDTE5MDcyNzE1MTExMloXDTE5MTAyNTE1MTExMlowgZ8xCzAJ
+  BgNVBAYTAlVTMREwDwYDVQQIDAhPa2xhaG9tYTEPMA0GA1UEBwwGTm9ybWFuMR8w
+  HQYDVQQKDBZVbml2ZXJzaXR5IG9mIE9rbGFob21hMSUwIwYDVQQLDBxMaWJyYXJ5
+  IFRlY2hub2xvZ3kgUGxhdGZvcm1zMSQwIgYDVQQDDBtzeXNsb2duZy1jbGllbnQu
+  ZXhhbXBsZS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCnaTE3
+  hN7YNT2u71OhW824KtytwzvDJkebE68C4atQaksiFR4Sq5ZQV5SM94AeibrziGZT
+  BoJ+xmGjeMXXyIoZIfwx4GMl/CWq5k2whIkVR9nk78NetM9K+/THnVc3bCIh9KHt
+  RSQ29INV9zNLpyx1FmEWTmnSNUEqaeBk5joccMUH/eeMzKQcQBIU9O6p2MLPt2bG
+  AQycWDmAjEaKQUQfV+oBIRncGRnZ3tQ4bPFhEzKFP1YowGk7S9dYg5lKxs0Ypwym
+  D98L2H12w6icEmpDIjz0rBM71P4CIi3s9R1wXcPZQvjeUX4YskPgj8t9VI+FUoAo
+  3YlQgTE9ni6lQbs/AgMBAAGjUDBOMB0GA1UdDgQWBBTA5b4G/BKInlMKXaU9UU7S
+  dsSh9zAfBgNVHSMEGDAWgBTA5b4G/BKInlMKXaU9UU7SdsSh9zAMBgNVHRMEBTAD
+  AQH/MA0GCSqGSIb3DQEBCwUAA4IBAQBOVXkrKcoOTLa4LpJnOc+4fsxPowUCBJBu
+  LvwRiYDbrWHPt6K+nAFEQN5BdPe84Zdv1azsuzgj067cO6zw4e6VN6Sgv4cqjfMO
+  6pEfe7JhhGdc/9+kka96epeLGfICmDtswbgRQ3KZFMmnlsCYDoYNLBJBW5i4ZtYW
+  ONOmsyJDlGn+7pvpr427+fmo1VYTcknZE7IDGwfSKTwqsbx+ktdRd0dOCYEudLEI
+  Q97/pApwDeUgtjcVs9qht0tSpEsE6qinqX6TWJ7MHm1cGvGCsgI/A08LvOrLfNoe
+  xsIuL6+7wxsmv71OjgkTGHFHifNo7gnf2209wGuigBXYlzJVqR1U
+  -----END CERTIFICATE-----

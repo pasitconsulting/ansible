@@ -1,0 +1,28 @@
+- name: ensure a list of packages installed
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - ntp
+    - wget
+    - telnet
+    - tcpdump
+
+- name: Add EPEL repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl:  https://dl.fedoraproject.org/pub/epel/7/x86_64/
+    gpgcheck: no
+
+- name: install syslogng
+  yum:
+    name: syslog-ng-{{ syslogng_version }}
+    state: present
+    allow_downgrade: on
+
+- name: start syslogng service
+  systemd: 
+    name: syslog-ng 
+    state: started
+    enabled: yes
