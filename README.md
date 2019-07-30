@@ -17,13 +17,18 @@ are here:-
 /etc/ansible/roles
 
 ### role names:-
-ansible-hardening             [(https://github.com/openstack/ansible-hardening)]
-ansible-role-syslogng-client  from https://github.com/OULibraries/ansible-role-syslogng-client
-configure-syslogng
+ansible-hardening               source github repo: https://github.com/openstack/ansible-hardening  
+
+ansible-role-syslogng-client    source githubrepo: https://github.com/OULibraries/ansible-role-syslogng-client
+ansible-role-syslogng           source github repo: https://github.com/OULibraries/ansible-role-syslogng
+ansible-role-users              source github repo: https://github.com/OULibraries/ansible-role-users
+
 install-syslogng
-ansible-role-syslogng
-ansible-role-users 
+configure-syslogng             
 hardening-syslogng
+
+
+
 
 
 
