@@ -58,7 +58,7 @@ add following line at bottom:
 
 5) on the ansible controller, test the passwordless ssh has been correctly setup:-
 
-       ssh ansible@[internal client ip]  ls -l  ```
+       ssh ansible@[internal client ip]  ls -l
 <br/>
 <br/>
 
