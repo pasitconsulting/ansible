@@ -1,4 +1,5 @@
 
+
 ## building syslogng client & server using Ansible roles & playbook ##
 
 <br/>
@@ -36,7 +37,7 @@ hardening-syslogng
 before running the playbooks, you need to prep a centos7 box with an ansible client:
 1) set hostname:-
 
-       hostnamectl set-hostname  shortname.domain.suffix   e.g. bill.example.com
+       hostnamectl set-hostname  [  myansibleclient.example.com ]
 
 2) create ansible user, login, create ssh key, set ansible control node to have passwordless access
 
@@ -96,12 +97,14 @@ add to [syslogng_servers] section of /etc/ansible/hosts
 
        ansible-playbook /etc/ansible/playbook/syslogng-server.yml
 
+then check the cert store and see it has created a server cert but not a client cert
+
 4) reboot the syslog-ng server/relay
 
 5) once back up after reboot, check syslog-ng is running & logging the local syslogng server/relay itself
 
        systemctl status syslog-ng.service
-       cd /var/log/syslog-ng/[syslog-ng fqdn hostname]
+       ls -l /var/log/syslog-ng/[syslog-ng fqdn hostname]/YYYY/MM/DD/[syslog-ng fqdn hostname]-YYYY-MM-DD.log
 
 
 <br/>
@@ -115,7 +118,7 @@ identify localhost internal ip:-
 	
 add to [syslogng_clients] section of /etc/ansible/hosts
 
-before you run the syslogng client playbook you need to setup the variables for the syslogng client role, and only edit the first 3 entries (i.e. ignore syslog_client variables  further down):-
+before you run the syslogng client playbook you need to setup the variables for the syslogng client role:-
 
     vi /etc/ansible/roles/ansible-role-syslogng-client/vars/main.yml
     #syslogng-client###client-variables
@@ -131,14 +134,29 @@ before you run the syslogng client playbook you need to setup the variables for 
     syslogng_server_port: 514
     syslogng_server_cert: |
       -----BEGIN CERTIFICATE-----
+      [insert the cert from syslogng-server /etc/pki/tls/certs/[syslogng-server]/[syslogng-server]_chain.pem
       -----END CERTIFICATE-----
 
 
-then run the playbook:-
+2) run the playbook:-
 
     ansible-playbook /etc/ansible/playbook/syslogng-server.yml
 
+3) add the client certificate to the syslogng **server** role variables file, this time adding in the client certificate that has just been generated, i.e
 
+       vi /etc/ansible/roles/ansible-role-syslogng/vars/main.yml
+       #syslogng_client_cert: |
+      -----BEGIN CERTIFICATE-----
+      [insert the cert from syslogng-client /etc/pki/tls/certs/[syslogng-clientr]/[syslogng-client]_chain.pem
+      -----END CERTIFICATE-----
+
+4) rerun the playbook
+
+       ansible-playbook /etc/ansible/playbook/syslogng-server.yml
+
+5) check the certs folder
+
+       ls -l /etc/pki/tls/certs 
 
 
 
