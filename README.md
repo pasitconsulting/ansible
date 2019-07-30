@@ -2,9 +2,9 @@
 ## building syslogng client & server using Ansible roles & playbook ##
 <br/>
 <br/>
-<br/>
-### use cases:-
-1) build a syslogng-client & syslog-ng server to test log forwarding in your own/an AWS account
+### use cases 
+
+1)  build a syslogng-client & syslog-ng server to test log forwarding in your own/an AWS account
 2) in the intended use case we will just need the syslogng-client/log forwarder installing (the syslogng-server /relay is already setup and we will be provided server details via email)
 <br/>
 
