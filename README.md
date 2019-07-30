@@ -61,10 +61,10 @@ add following line at bottom:
        ssh ansible@[internal client ip]  ls -l
 <br/>
 <br/>
+<br/>
 
 
-
-if you need to install both a syslogng client(log forwarder) and a syslogng server (log relay) , do this first! 
+NOTE: if you are setting up an AWS testlab with syslogng client/forwarder & server/relay; setup the syslogng server/relay first
 
 ### installing a syslogng server (log relay)
 1) update the /etc/ansible/hosts file with the local ip of the syslogng server
@@ -74,28 +74,35 @@ identify localhost internal ip:-
 	
 add to [syslogng_servers] section of /etc/ansible/hosts
 
-before you run the syslogng server playbook you need to setup the variables for the syslogng server role, and only edit the first 3 entries (i.e. ignore syslog_client variables  further down):-
+2) setup the variables for the syslogng server role, and edit the ip and dn_prefix/suffix for BOTH client and server but IGNORE the client cert variable (leave blank for now):-
 
     vi /etc/ansible/roles/ansible-role-syslogng/vars/main.yml
-
-	#syslogng-server###server-variables
-	syslogng_server_ip: [put server/relay local ip here    i.e. hostname -i ]
-	syslogng_dn_prefix: [put server/relay shortname here   i.e. hostname -s ]
-	syslogng_dn_suffix: [put server/relay domain name here     i.e. hostname -d]
-	syslogng_server_protocol: tls
-	syslogng_server_port: 514
+    #syslogng-server###server-variables
+    syslogng_server_ip: [put server/relay local ip here    i.e. hostname -i ]
+    syslogng_dn_prefix: [put server/relay shortname here   i.e. hostname -s ]
+    syslogng_dn_suffix: [put server/relay domain name here  i.e. hostname -d]
+    syslogng_server_protocol: tls
+    syslogng_server_port: 514
 
     #syslogng-server###client-variables
-    #syslogng_client_ip: 
-    #syslogng_client_prefix: 
-    #syslogng_client_suffix: 
-    #syslogng_client_cert: |
-    #<client cert goes here>
-    #-----END CERTIFICATE-----
+    syslogng_client_ip: [syslogng client/forwarder ip here   i.e. hostname -i ]
+    syslogng_client_prefix: [syslogng client shortname here   i.e. hostname -s]
+    syslogng_client_suffix: [syslogng client domain name     i.e. hostname -d]
+    #syslogng_server_cert: |
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----
 
-then run the playbook:-
+3) run the playbook (note it will fail on the missing client cert, but this is ok):-
 
-    ansible-playbook /etc/ansible/playbook/syslogng-server.yml
+       ansible-playbook /etc/ansible/playbook/syslogng-server.yml
+
+4) reboot the syslog-ng server/relay
+
+5) once back up after reboot, check syslog-ng is running & logging the local syslogng server/relay itself
+
+       systemctl status syslog-ng.service
+       cd /var/log/syslog-ng/[syslog-ng fqdn hostname]
+
 
 <br/>
 
@@ -112,9 +119,9 @@ before you run the syslogng client playbook you need to setup the variables for 
 
     vi /etc/ansible/roles/ansible-role-syslogng-client/vars/main.yml
     #syslogng-client###client-variables
-    syslogng_client_ip: [local client/forwarder ip here   i.e. hostname -i ]
-    syslogng_dn_prefix: [local shortname here   i.e. hostname -s]
-    syslogng_dn_suffix: [client domain name     i.e. hostname -d]
+    syslogng_client_ip: [syslogng client/forwarder ip here   i.e. hostname -i ]
+    syslogng_dn_prefix: [syslogng client shortname here   i.e. hostname -s]
+    syslogng_dn_suffix: [syslogng client domain name     i.e. hostname -d]
 
     #syslogng-client###server-variables
     syslogng_server_ip: [local server/relay ip here]
