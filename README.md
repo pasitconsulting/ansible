@@ -31,33 +31,41 @@ hardening-syslogng
 ### prereqs: install ansible client:-
 before running the playbooks, you need to prep a centos7 box with an ansible client:
 1) set hostname:-
-hostnamectl set-hostname  shortname.domain.suffix   e.g. bill.example.com
+
+       hostnamectl set-hostname  shortname.domain.suffix   e.g. bill.example.com
 
 2) create ansible user, login, create ssh key, set ansible control node to have passwordless access
-sudo su -
-useradd ansible   (where ansible = username)
-sudo su - ansible
-ssh-keygen -t rsa (accept all defaults)
-touch /home/ansible/.ssh/authorized_keys; chmod 600 /home/ansible/.ssh/authorized_keys
+
+       sudo su -
+       useradd ansible   (where ansible = username)
+       sudo su - ansible
+       ssh-keygen -t rsa (accept all defaults)
+       touch /home/ansible/.ssh/authorized_keys; chmod 600 /home/ansible/.ssh/authorized_keys
 
 3) copy the ansible controller's ssh pub key to the authorized_keys file you just created on client
 
 4) edit sudo file on client to allow ansible user to run all commands:-
 visudo  
 -add following line at bottom:
-ansible	ALL=(ALL:ALL) ALL
+
+       ansible	ALL=(ALL:ALL) ALL
 
 
 
 if you need to install both a syslogng client(log forwarder) and a syslogng server (log relay) , do this first! 
 
 ### installing a syslogng server (log relay)
-1) update the /etc/ansible/hosts file with the local ip of the syslogng server  
+1) update the /etc/ansible/hosts file with the local ip of the syslogng server
+identify localhost internal ip:-
 
-before you run the syslogng server playbook you need to setup the variables for the syslogng server role:-  
+       hostname -i
+	
+add to [syslogng_servers] section of /etc/ansible/hosts
+
+before you run the syslogng server playbook you need to setup the variables for the syslogng server role:-
 /etc/ansible/roles/ansible-role-syslogng
-the variables are in /etc/ansible/roles/ansible-role-syslogng/vars/main.yml  
-ansible-playbook --ask-vault-pass /etc/ansible/playbook/syslogng-server.yml  
+the variables are in /etc/ansible/roles/ansible-role-syslogng/vars/main.yml
+ansible-playbook --ask-vault-pass /etc/ansible/playbook/syslogng-server.yml
 
 	#syslogng-server###server-variables
 	syslogng_server_ip: [put server local ip here]
@@ -78,7 +86,7 @@ ansible-playbook --ask-vault-pass /etc/ansible/playbook/syslogng-server.yml
 ### installing a syslogng client (local log forwarder)
 
 ### test the log forwarding is working:-
-1) on syslogng-server (log-relay) look under /var/log/syslog-ng  
-you should see a directory for each client, where directory name is same as client fqdn hostname.  
+1) on syslogng-server (log-relay) look under /var/log/syslog-ng
+you should see a directory for each client, where directory name is same as client fqdn hostname.
 under this is a set of date folders and a syslogng logfile
 if you run a tail -f on this client logfile and then in a separate window, but on the syslogng client, run a logger command ( run logger 'type something random' ) you should see the message pop up in the window
