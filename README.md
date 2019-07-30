@@ -19,13 +19,13 @@ are here:-
 ### role names:-
 ansible-hardening               source github repo: https://github.com/openstack/ansible-hardening  
 
-ansible-role-syslogng-client    source githubrepo: https://github.com/OULibraries/ansible-role-syslogng-client
-ansible-role-syslogng           source github repo: https://github.com/OULibraries/ansible-role-syslogng
-ansible-role-users              source github repo: https://github.com/OULibraries/ansible-role-users
+ansible-role-syslogng-client    source githubrepo: https://github.com/OULibraries/ansible-role-syslogng-client  
+ansible-role-syslogng           source github repo: https://github.com/OULibraries/ansible-role-syslogng  
+ansible-role-users              source github repo: https://github.com/OULibraries/ansible-role-users  
 
-install-syslogng
-configure-syslogng             
-hardening-syslogng
+install-syslogng  
+configure-syslogng            
+hardening-syslogng  
 
 
 
