@@ -49,10 +49,30 @@ ansible	ALL=(ALL:ALL) ALL
 
 
 
+if you need to install both a syslogng client(log forwarder) and a syslogng server (log relay) , do this first! 
+
 ### installing a syslogng server (log relay)
-if you need to install both a syslogng client and a syslogng server, do this first! 
-before you run the syslogng server playbook you need to setup the variables for the 
+1) update the /etc/ansible/hosts file with the local ip of the syslogng server
+
+before you run the syslogng server playbook you need to setup the variables for the syslogng server role:-
+/etc/ansible/roles/ansible-role-syslogng
+the variables are in /etc/ansible/roles/ansible-role-syslogng/vars/main.yml
 ansible-playbook --ask-vault-pass /etc/ansible/playbook/syslogng-server.yml
+
+	#syslogng-server###server-variables
+	syslogng_server_ip: [put server local ip here]
+	syslogng_dn_prefix: [put server shortname here]
+	syslogng_dn_suffix: [put server domain name here e.g. example.com]
+	syslogng_server_protocol: tls
+	syslogng_server_port: 514
+
+	#syslogng-server###client-variables
+	syslogng_client_ip: [add client local ip here - later on!]
+	syslogng_client_prefix: [add client shortname here  - later on!]
+	syslogng_client_suffix: [add client domain name here e.g. example.com  - later on!]
+	syslogng_client_cert: |
+	  <client cert goes here  - later on!>
+	  -----END CERTIFICATE-----
 
 
 ### installing a syslogng client (local log forwarder)
