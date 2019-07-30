@@ -35,8 +35,8 @@ are here:-
 **ansible-role-users**              source github repo: https://github.com/OULibraries/ansible-role-users  
 
 **install-syslogng**
-**configure-syslogng**          
-**hardening-syslogng**  
+**configure-syslogng**
+**hardening-syslogng**
 
 <br/>
 
