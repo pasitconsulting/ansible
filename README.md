@@ -1,10 +1,9 @@
 
-
-
-
 ## building syslogng client & server using Ansible roles & playbook ##
 
-
+### use cases:-
+1) build a syslogng-client & syslog-ng server to test log forwarding in your own/an AWS account
+2) in the intended use case we will just need the syslogng-client/log forwarder installing (the syslogng-server /relay is already setup and we will be provided server details via email)
 <br/>
 
 ### terms:
@@ -13,15 +12,15 @@ syslogng server = log relay
 
 #### Playbooks
 are here:-
-/etc/ansible/playbook
 
-### playbook names:-
-syslogng-clients.yml 
-syslogng-server.yml
+       ls -l /etc/ansible/playbook
+       syslogng-clients.yml 
+       syslogng-server.yml
 
-### ROLES:-
+#### Roles
 are here:-
-/etc/ansible/roles
+  
+     ls -l /etc/ansible/roles
 
 ### role names:-
 ansible-hardening               source github repo: https://github.com/openstack/ansible-hardening  
@@ -177,6 +176,12 @@ then check the cert store and see it now has both a client and server .pem file
     ls -l /etc/pki/tls/certs 
   you should see a directory with the syslogng server name and a pem cert below it & ditto for the client
                 
+6) reboot the syslog-ng client/forwarder
+
+7) once back up after reboot, check syslog-ng is running & logging the client/forwarder
+
+       systemctl status syslog-ng.service
+       ls -l /var/log/syslog-ng/[syslogng client fqdn hostname]/YYYY/MM/DD/[syslog-ng client fqdn hostname]-YYYY-MM-DD.log
 
 
 
@@ -187,3 +192,14 @@ then check the cert store and see it now has both a client and server .pem file
 you should see a directory for each client, where directory name is same as client fqdn hostname.
 under this is a set of date folders and a syslogng logfile
 if you run a tail -f on this client logfile and then in a separate window, but on the syslogng client, run a logger command ( run logger 'type something random' ) you should see the message pop up in the window
+
+2) the acid test!
+run a logger test i.e print a random message to your syslog whilst tailing the syslogng-server's copy of the client's forwarded logfile
+
+client:
+  
+    logger 'this will be a miracle if this log appears on the syslogng-server!!!'
+
+server
+
+    tail -f /var/log/syslog-ng/[syslogng-client fqdn]/YYY/MM/DD/[syslogng-client fqdn]-YYYY-MM-DD.log
