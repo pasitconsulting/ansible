@@ -4,7 +4,7 @@
 syslogng client = local log forwarder
 syslogng server = log relay
 
-### PLAYBOOKS 
+#### Playbooks
 are here:-
 /etc/ansible/playbook
 
@@ -28,12 +28,12 @@ configure-syslogng
 hardening-syslogng  
 
 
-###prereqs:-
-before running the playbooks, you need to prep a centos7 box with an ansible client:-
+### prereqs: install ansible client:-
+before running the playbooks, you need to prep a centos7 box with an ansible client:
 1) set hostname:-
 hostnamectl set-hostname  shortname.domain.suffix   e.g. bill.example.com
 
-2)create ansible user, login, create ssh key, set ansible control node to have passwordless access
+2) create ansible user, login, create ssh key, set ansible control node to have passwordless access
 sudo su -
 useradd ansible   (where ansible = username)
 sudo su - ansible
@@ -48,5 +48,17 @@ visudo
 ansible	ALL=(ALL:ALL) ALL
 
 
+
+### installing a syslogng server (log relay)
+if you need to install both a syslogng client and a syslogng server, do this first! 
+before you run the syslogng server playbook you need to setup the variables for the 
 ansible-playbook --ask-vault-pass /etc/ansible/playbook/syslogng-server.yml
 
+
+### installing a syslogng client (local log forwarder)
+
+### test the log forwarding is working:-
+1) on syslogng-server (log-relay) look under /var/log/syslog-ng
+you should see a directory for each client, where directory name is same as client fqdn hostname.
+under this is a set of date folders and a syslogng logfile
+if you run a tail -f on this client logfile and then in a separate window, but on the syslogng client, run a logger command ( run logger 'type something random' ) you should see the message pop up in the window
