@@ -1,5 +1,7 @@
 ## building syslogng client & server using Ansible roles & playbook ##
 
+<br/>
+
 ### terms:
 syslogng client = local log forwarder
 syslogng server = log relay
@@ -27,6 +29,7 @@ install-syslogng
 configure-syslogng            
 hardening-syslogng  
 
+<br/>
 
 ### prereqs: install ansible client:-
 before running the playbooks, you need to prep a centos7 box with an ansible client:
@@ -45,10 +48,18 @@ before running the playbooks, you need to prep a centos7 box with an ansible cli
 3) copy the ansible controller's ssh pub key to the authorized_keys file you just created on client
 
 4) edit sudo file on client to allow ansible user to run all commands:-
-visudo  
--add following line at bottom:
 
-       ansible	ALL=(ALL:ALL) ALL
+       sudo su -
+       visudo  
+add following line at bottom:
+
+       ansible ALL=(ALL:ALL)           NOPASSWD: ALL
+
+5) on the ansible controller, test the passwordless ssh has been correctly setup:-
+
+       ssh ansible@[internal client ip]  ls -l  ```
+<br/>
+<br/>
 
 
 
@@ -62,26 +73,30 @@ identify localhost internal ip:-
 	
 add to [syslogng_servers] section of /etc/ansible/hosts
 
-before you run the syslogng server playbook you need to setup the variables for the syslogng server role:-
-/etc/ansible/roles/ansible-role-syslogng
-the variables are in /etc/ansible/roles/ansible-role-syslogng/vars/main.yml
-ansible-playbook --ask-vault-pass /etc/ansible/playbook/syslogng-server.yml
+before you run the syslogng server playbook you need to setup the variables for the syslogng server role, and only edit the first 3 entries (i.e. ignore syslog_client variables  further down):-
+
+    vi /etc/ansible/roles/ansible-role-syslogng/vars/main.yml
 
 	#syslogng-server###server-variables
-	syslogng_server_ip: [put server local ip here]
-	syslogng_dn_prefix: [put server shortname here]
-	syslogng_dn_suffix: [put server domain name here e.g. example.com]
+	syslogng_server_ip: [put server/relay local ip here]
+	syslogng_dn_prefix: [put server/relay shortname here]
+	syslogng_dn_suffix: [put server/relay domain name here e.g. example.com]
 	syslogng_server_protocol: tls
 	syslogng_server_port: 514
 
-	#syslogng-server###client-variables
-	syslogng_client_ip: [add client local ip here - later on!]
-	syslogng_client_prefix: [add client shortname here  - later on!]
-	syslogng_client_suffix: [add client domain name here e.g. example.com  - later on!]
-	syslogng_client_cert: |
-	  <client cert goes here  - later on!>
-	  -----END CERTIFICATE-----
+    #syslogng-server###client-variables
+    #syslogng_client_ip: 
+    #syslogng_client_prefix: 
+    #syslogng_client_suffix: 
+    #syslogng_client_cert: |
+    #<client cert goes here>
+    #-----END CERTIFICATE-----
 
+then run the playbook:-
+
+    ansible-playbook /etc/ansible/playbook/syslogng-server.yml
+
+<br/>
 
 ### installing a syslogng client (local log forwarder)
 
