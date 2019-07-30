@@ -1,24 +1,24 @@
-building syslogng client & server using Ansible roles & playbook
+# building syslogng client & server using Ansible roles & playbook #
 
-terms:
+## terms:
 syslogng client = local log forwarder
 syslogng server = log relay
 
-PLAYBOOKS 
+## PLAYBOOKS 
 are here:-
 /etc/ansible/playbook
 
-playbook names:-
+## playbook names:-
 syslogng-clients.yml 
 syslogng-server.yml
 
-ROLES:-
+## ROLES:-
 are here:-
 /etc/ansible/roles
 
-role names:-
-ansible-hardening   (from 
-ansible-role-syslogng-client
+## role names:-
+ansible-hardening  [https://github.com/openstack/ansible-hardening]
+ansible-role-syslogng-client (from https://github.com/OULibraries/ansible-role-syslogng-client)
 configure-syslogng
 install-syslogng
 ansible-role-syslogng
