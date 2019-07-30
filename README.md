@@ -4,7 +4,7 @@
 <br/>
 
 ### terms:
-syslogng client = local log forwarder
+syslogng client = local log forwarder <br>
 syslogng server = log relay
 
 #### Playbooks
