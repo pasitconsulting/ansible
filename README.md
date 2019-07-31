@@ -5,7 +5,7 @@
 
 ###   use cases 
 
-1)  build a syslogng-client & syslog-ng server to test log forwarding in your own/an AWS account
+  1)  build a syslogng-client & syslog-ng server to test log forwarding in your own/an AWS account
 2) in the intended use case we will just need the syslogng-client/log forwarder installing (the syslogng-server /relay is already setup and we will be provided server details via email)
 <br/>
 
@@ -42,7 +42,7 @@ are here:-
 
 ### prereqs: install ansible client:-
 before running the playbooks, you need to prep a centos7 box with an ansible client:
-1) set hostname:-
+1) set fully qualified hostname:-
 
        hostnamectl set-hostname  [  myansibleclient.example.com ]
 
@@ -56,7 +56,7 @@ before running the playbooks, you need to prep a centos7 box with an ansible cli
 
 3) copy the ansible controller's ssh pub key to the authorized_keys file you just created on client
 
-4) edit sudo file on client to allow ansible user to run all commands:-
+4) as root user, edit sudo file on client to allow ansible user to run all commands:-
 
        sudo su -
        visudo  
@@ -98,11 +98,12 @@ add to [syslogng_servers] section of /etc/ansible/hosts
          -----BEGIN CERTIFICATE-----
          -----END CERTIFICATE-----
 
-3) run the playbook (note it will fail on the missing client cert, but this is ok):-
+3) run the playbook 
+**note it will fail on the step [Configure Syslog-ng Client Cert] but this is expected**
 
        ansible-playbook /etc/ansible/playbook/syslogng-server.yml
 
-then check the cert store and see it has created a server cert but not a client cert
+then check the pki cert folder and see it has created a server cert folder with pem cert below it (note: it should also create an empty client dir at this point)
 
     ls -l /etc/pki/tls/certs 
   you should see a directory with the syslogng server name and a pem cert below it
@@ -147,7 +148,7 @@ before you run the syslogng client playbook you need to setup the variables for 
       [insert the cert from syslogng-server /etc/pki/tls/certs/[syslogng-server]/[syslogng-server]_chain.pem
       -----END CERTIFICATE-----
 
-**NOTE: the cert needs 2 spaces on each line indentation**
+**NOTE: the cert needs 2 spaces indentation on each line**
 
 2) run the playbook:-
 
@@ -170,11 +171,11 @@ before you run the syslogng client playbook you need to setup the variables for 
 
 **NOTE: the cert needs 2 spaces on each line indentation**
 
-5) rerun the playbook
+5) rerun the server playbook
 
        ansible-playbook /etc/ansible/playbook/syslogng-server.yml
 
-then check the cert store and see it now has both a client and server .pem file
+then check the cert folder on the syslogng server and see it now has both client and server folders with .pem files below
 
     ls -l /etc/pki/tls/certs 
   you should see a directory with the syslogng server name and a pem cert below it & ditto for the client
