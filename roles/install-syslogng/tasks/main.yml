@@ -15,6 +15,14 @@
     baseurl:  https://dl.fedoraproject.org/pub/epel/7/x86_64/
     gpgcheck: no
 
+- name: Add syslog-ng repository
+  yum_repository:
+    name: syslog-ng-3.17
+    description: syslog-ng-3.17
+    baseurl:  https://copr-be.cloud.fedoraproject.org/results/czanik/syslog-ng317/epel-7-x86_64/
+    gpgcheck: 1
+    gpgkey: https://copr-be.cloud.fedoraproject.org/results/czanik/syslog-ng317/pubkey.gpg
+
 - name: install syslogng
   yum:
     name: syslog-ng-{{ syslogng_version }}
