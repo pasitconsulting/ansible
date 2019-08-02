@@ -1,5 +1,5 @@
 
-## building syslogng client & server using Ansible roles & playbook ##
+## building syslogng client(forwarder) & server(relay) with mTLS enabled using Ansible roles & playbook ##
 <br/>
 <br/>
 
