@@ -5,8 +5,8 @@
   become: yes
   roles:
     - role: install-syslogng
+    - role: ansible-role-ntp
     - role: configure-syslogng
-    #- role: hardening-syslogng
     #STIG centos7 hardening
     - role: ansible-hardening
     #OU Libraries
