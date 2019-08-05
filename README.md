@@ -33,6 +33,7 @@ are here:-
 **ansible-role-syslogng-client**    source githubrepo: https://github.com/OULibraries/ansible-role-syslogng-client  
 **ansible-role-syslogng**           source github repo: https://github.com/OULibraries/ansible-role-syslogng  
 **ansible-role-users**              source github repo: https://github.com/OULibraries/ansible-role-users  
+**ansible-role-ntp**              source github repo: https://github.com/geerlingguy/ansible-role-ntp.git  
 
 **install-syslogng**  
 **configure-syslogng**  
